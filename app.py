@@ -1,14 +1,19 @@
-import flask_login
-from flask import Flask, flash, render_template, request, redirect, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask, flash, render_template, request, redirect, url_for, g
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
-from flask_login import UserMixin, login_user, logout_user, login_required, LoginManager
+from flask_login import UserMixin, login_user, logout_user, login_required, LoginManager, current_user
+from flask_migrate import Migrate
+from decouple import config
+
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///grocery.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{config("DB_USER")}:{config("DB_PASSWORD")}' \
+                                              f'@localhost:{config("DB_PORT")}/{config("DB_NAME")}'
 app.config["SECRET_KEY"] = "30f6735b3cd39d20a9d7276e"
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 app.config['MAIL_SERVER'] = 'mail.sportcentre.info'
 app.config['MAIL_PORT'] = 465
@@ -22,18 +27,18 @@ login_manager.login_view = "login_page"
 login_manager.login_message_category = "info"
 
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer(), primary_key=True)
-    username = db.Column(db.String(length=30), nullable=False, unique=True)
-    password = db.Column(db.String(length=60), nullable=False)
-    items = db.relationship("Items", backref='owned_user', lazy="dynamic")
-
-
 class Items(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(length=30), nullable=False)
+    name = db.Column(db.String(length=70), nullable=False)
     number = db.Column(db.Integer, nullable=False)
-    owner = db.Column(db.Integer(), db.ForeignKey("user.id"))
+    owner = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(length=30), nullable=False, unique=True)
+    password = db.Column(db.String, nullable=False)
+    items = db.relationship("Items", backref='owned_user', lazy="dynamic")
 
 
 @login_manager.user_loader
@@ -50,17 +55,7 @@ def index():
             Items.query.delete()
 
         elif request.form["submit_button"] == "Add":
-            item_to_add = Items(name=request.form.get("name"), number=request.form.get("number"))
-
-
-            """
-            i1 = Item.query.filter_by(name="Butter").first()
-            u1 = User.query.filter_by(username="lilko").first()
-            
-            i1.owner = u1.id
-            db.session.add(i1)
-            db.session.commit()
-            """
+            item_to_add = Items(name=request.form.get("name"), number=request.form.get("number"), owner=current_user.id)
 
             db.session.add(item_to_add)
 
@@ -76,9 +71,7 @@ def index():
 
         db.session.commit()
 
-    current_items = Items.query.all()
-
-    return render_template("index.html", current_items=current_items)
+    return render_template("index.html", user=current_user)
 
 
 @app.route("/send-email", methods=["POST", "GET"])
@@ -101,9 +94,11 @@ def send_email_page():
 @app.route("/register", methods=["GET", "POST"])
 def register_page():
     username = request.form.get("username")
-    password = request.form.get("password")
+    passw = request.form.get("password")
 
-    if username and password:
+    if username and passw:
+        password = generate_password_hash(passw, method='sha256')
+
         user_to_create = User(username=username, password=password)
 
         db.session.add(user_to_create)
@@ -123,8 +118,8 @@ def login_page():
 
     if request.method == 'POST':
         if current_user:
-            if current_user.password == password:
-                login_user(current_user)
+            if check_password_hash(current_user.password, password):
+                login_user(current_user, remember=True)
                 flash("Success! You are logged in!", category="success")
 
                 return redirect(url_for("index"))

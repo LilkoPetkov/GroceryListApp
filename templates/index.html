@@ -13,17 +13,17 @@
 </head>
 <body>
     {% if current_user.is_authenticated %}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                  <div class="alert alert-{{ category }}">
-                      <button type="button" class="m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                      {{ message }}
-                  </div>
-               {% endfor %}
-            {% endif %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                      <div class="alert alert-{{ category }}">
+                          <button type="button" class="m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                          {{ message }}
+                      </div>
+                   {% endfor %}
+                {% endif %}
     {% endwith %}
     <form method="post">
         <label for="groceries">Choose groceries:</label>
@@ -47,13 +47,10 @@
     <form method="post">
         <input type="submit" name="submit_button" value="Logout">
     </form>
-<!--    {% for item in current_items %}-->
-<!--        {{item.name}} - {{ item.number }}-->
-<!--        <br>-->
-<!--    {% endfor %}-->
-
-        {user.Items}
-
+    {% for item in user.items %}
+        {{ item.name }} - {{ item.number }}
+        <br>
+    {% endfor %}
     {% endif %}
     </select>
       <script src='https://kit.fontawesome.com/a076d05399.js'></script>
