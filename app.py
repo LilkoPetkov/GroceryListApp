@@ -15,9 +15,9 @@ app.config["SECRET_KEY"] = "30f6735b3cd39d20a9d7276e"
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-app.config['MAIL_SERVER'] = 'mail.sportcentre.info'
+app.config['MAIL_SERVER'] = config("MAIL_SERVER")
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'info@sportcentre.info'
+app.config['MAIL_USERNAME'] = config("MAIL_USERNAME")
 app.config['MAIL_PASSWORD'] = config("MAIL_PASSWORD")
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
