@@ -9,8 +9,7 @@ from decouple import config
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{config("DB_USER")}:{config("DB_PASSWORD")}' \
                                               f'@localhost:{config("DB_PORT")}/{config("DB_NAME")}'
-app.config["SECRET_KEY"] = "30f6735b3cd39d20a9d7276e"
-
+app.config["SECRET_KEY"] = config("SECRET_KEY")
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 

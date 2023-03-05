@@ -84,7 +84,6 @@ def login_page():
         if current_user:
             if check_password_hash(current_user.password, password):
                 login_user(current_user, remember=True)
-                flash("Success! You are logged in!", category="success")
 
                 return redirect(url_for("index"))
             else:
