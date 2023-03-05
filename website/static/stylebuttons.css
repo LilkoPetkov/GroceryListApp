@@ -1,0 +1,58 @@
+.global-btn {
+    background-color: #FCE1A8;
+    border-radius: 8px;
+    width: 80px;
+    height: 30px;
+    color: black;
+    border-style: none;
+    font-weight: 400;
+}
+
+.global-btn:hover {
+    background-color: #CBDCE4;
+
+}
+
+.cont {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    item-align: center;
+    margin-top: 1%;
+}
+
+.inline-btn {
+    display: inline-block;
+}
+
+.form1 {
+    text-align: center;
+    margin-top: 8%;
+}
+
+.logout-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.txt-area {
+    margin-left: 40%;
+    margin-top: 1%;
+}
+
+.cont-email {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 18%;
+}
+
+.back-btn {
+    text-align: center;
+    margin-top: 1%;
+}
+
+.send-btn {
+    margin-left: 8px;
+}
