@@ -28,9 +28,9 @@
 
     <form class="form1" method="post">
         <label for="groceries">Choose groceries:</label>
-            <input type="text" id="name" name="name" required>
+            <input class="choose-grocery" type="text" id="name" name="name" required>
         <label for="groceries">Choose quantity:</label>
-            <input type="text" id="number" name="number" required>
+            <input class="choose-quantity" type="text" id="number" name="number" required>
         <br>
         <input class="global-btn inline-btn" type="submit" name="submit_button" value="Add">
 
@@ -46,12 +46,14 @@
             <input class="global-btn logout-btn" type="submit" name="submit_button" value="Logout">
         </form>
     </div>
-    <textarea class="txt-area" id="txt-area" name="txt-area" rows="18 " cols="50" maxlength="0">
-    {% for item in user.items %}
-        {{ item.name }} - {{ item.number }}
-    {% endfor %}
-    {% endif %}
-    </textarea>
+    <div class="txt-area">
+        <textarea class="txt-area" id="txt-area" name="txt-area" rows="10 " cols="70" maxlength="0">
+        {% for item in user.items %}
+            {{  item.name }} - {{ item.number }}
+        {% endfor %}
+        {% endif %}
+        </textarea>
+    </div>
 
       <script src='https://kit.fontawesome.com/a076d05399.js'></script>
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

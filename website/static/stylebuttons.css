@@ -1,11 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: Raleway, sans-serif;
+}
+
+.txt-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1%;
+    border-radius: 12px;
+}
+
+
 .global-btn {
-    background-color: #FCE1A8;
-    border-radius: 8px;
-    width: 80px;
+    background: #fff;
+    font-size: 14px;
+    border-radius: 26px;
+    border: 1px solid #D4D3E8;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    width: 100px;
     height: 30px;
-    color: black;
-    border-style: none;
-    font-weight: 400;
+    color: #4C489D;
+    box-shadow: 0px 2px 2px #5c5696;
+    cursor: pointer;
+    transition: .2s;
+    justify-content: center;
+    margin-top: 1%;
 }
 
 .global-btn:hover {
@@ -32,13 +59,8 @@
 
 .logout-btn {
     position: absolute;
-    top: 5px;
+    top: 0px;
     right: 5px;
-}
-
-.txt-area {
-    margin-left: 40%;
-    margin-top: 1%;
 }
 
 .cont-email {
@@ -50,9 +72,56 @@
 
 .back-btn {
     text-align: center;
-    margin-top: 1%;
+    justify-content: center;
+    position: absolute;
+    top: 1%;
+    right: 1%;
 }
 
 .send-btn {
     margin-left: 8px;
+    margin-top: 10px;
+}
+
+.choose-quantity {
+    border: none;
+    border-bottom: 2px solid #D1D1D4;
+    background: white;
+    padding: 5px;
+    padding-left: 24px;
+    font-weight: normal;
+    width: 3%;
+    transition: .2s;
+    border-radius: 8px;
+}
+
+.choose-grocery {
+    border: none;
+    border-bottom: 2px solid #D1D1D4;
+    background: white;
+    padding: 5px;
+    padding-left: 24px;
+    font-weight: normal;
+    width: 10%;
+    transition: .2s;
+    border-radius: 8px;
+    margin-right: 1%;
+}
+
+label {
+    font-weight: 700;
+    color: #202008;
+}
+
+.mail-input {
+    border: none;
+    border-bottom: 2px solid #D1D1D4;
+    background: white;
+    padding: 5px;
+    padding-left: 24px;
+    font-weight: normal;
+    width: 260px;
+    transition: .2s;
+    border-radius: 8px;
+    margin-right: 1%;
 }
